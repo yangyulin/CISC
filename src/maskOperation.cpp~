@@ -1,0 +1,165 @@
+//
+// Created by rpng on 7/26/16.
+//
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+
+#include <iostream>
+#include <sstream>
+#include <string>
+
+#include "help.h"
+#include "scanAlgorithm.h"
+
+using namespace cv;
+using namespace std;
+
+int main( int argc, char** argv ){
+
+
+    imageScan::help scanHelp;
+    scanHelp.helpInstruction();
+
+    if(argc < 3)
+    {
+        cout<<"Not enough parameters!"<<endl;
+        return -1;
+    }
+
+    //read the image
+    Mat image, imageCp;
+
+    if(argc == 4 && !strcmp(argv[3], "G"))
+    {
+        image = imread(argv[1],IMREAD_GRAYSCALE);
+    }
+    else
+    {
+        image = imread(argv[1],IMREAD_COLOR);
+    }
+
+    //remember to verify the reading of the image
+    if (image.empty())
+    {
+        cout<<"The image" << argv[1] << "cannot be loaded!"<< endl;
+        return  -1;
+    }
+
+    namedWindow("lena", WINDOW_AUTOSIZE);
+    imshow("lena", image);
+
+    waitKey(0);
+    //read the divide width
+
+    int divideWith = 0;
+    stringstream sInput;
+
+    sInput << argv[2];
+    sInput >> divideWith;
+    if (!sInput || ! divideWith)
+    {
+        cout<<"Invalid number entered for the dividing."<<endl;
+        return -1;
+    }
+
+    //construct the table
+    uchar table[256];
+    for (int i=0; i<256; ++i)
+    {
+        table[i]=(uchar)(divideWith * (i/divideWith));
+    }
+
+
+    const int times = 100;
+    double t;
+    imageScan::scanAlgorithm scan;
+
+    //calculate the time used with scanImageAndReduceC
+
+    t = (double)getTickCount();
+    for (int i=0; i<times; ++i)
+    {
+        Mat clone_image = image.clone();
+        imageCp = scan.scanImageAndReduceC(clone_image,table);
+    }
+
+    t = 1000 * ((double)getTickCount() - t )/getTickFrequency();
+    t /= times;
+
+    cout << "Time of reducing with the C operater [] (average for " << times
+            << "runs): " << t << " milliseconds. " << endl;
+
+
+    namedWindow("C Operation",WINDOW_AUTOSIZE);
+    imshow("C Operation",imageCp);
+
+    waitKey(0);
+
+    //calculate the time used with scanImageAndReduceIterator
+    t = (double)getTickCount();
+    for (int i=0; i<times; ++i)
+    {
+        Mat clone_image = image.clone();
+        imageCp = scan.scanImageAndReduceIterator(clone_image,table);
+    }
+
+    t = 1000 * ((double)getTickCount() - t )/getTickFrequency();
+    t /= times;
+
+    cout << "Time of reducing with the C operater [] (average for " << times
+    << "runs): " << t << " milliseconds. " << endl;
+
+    namedWindow("CV Iterator",WINDOW_AUTOSIZE);
+    imshow("CV Iterator",imageCp);
+
+    waitKey(0);
+
+    //calculate the time used with scanImageAndReduceRandomAccess
+    t = (double)getTickCount();
+    for (int i=0; i<times; ++i)
+    {
+        Mat clone_image = image.clone();
+        imageCp = scan.scanImageAndReduceRandomAccess(clone_image,table);
+    }
+
+    t = 1000 * ((double)getTickCount() - t )/getTickFrequency();
+    t /= times;
+
+    cout << "Time of reducing with the C operater [] (average for " << times
+    << "runs): " << t << " milliseconds. " << endl;
+
+    namedWindow("Random Access",WINDOW_AUTOSIZE);
+    imshow("Random Access",imageCp);
+
+    waitKey(0);
+
+    //convert the table to a Mat style table
+    Mat lookuptable(1,256,CV_8U);
+    uchar *p = lookuptable.ptr();
+    for (int i = 0; i < 256; ++i) {
+        p[i] = table[i];
+    }
+
+    t = (double)getTickCount();
+    for (int i = 0; i <times ; ++i) {
+        Mat clone_image =  image.clone();
+        LUT(clone_image,lookuptable,imageCp);
+    }
+
+
+    t = 1000 * ((double)getTickCount() - t )/getTickFrequency();
+    t /= times;
+    cout << "Time of reducing with the C operater [] (average for " << times
+    << "runs): " << t << " milliseconds. " << endl;
+
+    namedWindow("LUT",WINDOW_AUTOSIZE);
+    imshow("LUT",imageCp);
+
+    waitKey(0);
+
+
+    return 0;
+}
