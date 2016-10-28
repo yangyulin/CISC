@@ -6,17 +6,19 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
+#include <boost/filesystem.hpp>
 
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <help.h>
 #include <HWAlgorithm.h>
+#include <HWAlgorithm2.h>
 
 
 using namespace cv;
 using namespace std;
-
+using namespace CISC;
 
 void on_mouse( int e, int x, int y, int d, void *ptr ) {
     Point *p = (Point *) ptr;
@@ -121,7 +123,7 @@ int main( int argc, char** argv ){
         setMouseCallback("Target Img1", on_mouse, &p1);
         boundary1 = p1.x;
         cout << "The current selected blending boundary1 is x1 = " << boundary1 << endl;
-        char key = (char) waitKey(0);
+        char key = (char) waitKey(50);
         if (key == 'p') {
             destroyWindow("Target Img1");
             counter++;
@@ -140,7 +142,7 @@ int main( int argc, char** argv ){
         setMouseCallback("Target Img2", on_mouse, &p2);
         boundary2 = p2.x;
         cout << "The current x2 = " << boundary2 << endl;
-        char key = (char) waitKey(0);
+        char key = (char) waitKey(50);
         if (key == 'p') {
             destroyWindow("Target Img2");
             counter++;
@@ -157,6 +159,26 @@ int main( int argc, char** argv ){
 
     waitKey(0);
 
+
+    // Get image path
+    boost::filesystem::path image1_path{"../data/rubberwhale1.png"};
+    boost::filesystem::path image2_path{"../data/rubberwhale2.png"};
+
+    cv::Mat image1, image2;
+    image1 = cv::imread(image1_path.string());
+    image2 = cv::imread(image2_path.string());
+
+    if(!image1.data || !image2.data) {
+        std::cout << "Could not open or find the image1/image2." << "\n";
+        return -1;
+    }
+
+    CISC::HWAlgorithm2 part2(image1, image2);
+
+    //part2.Auto();
+    part2.Mannual();
+
+    cv::waitKey(0);
 
 
     return 0;

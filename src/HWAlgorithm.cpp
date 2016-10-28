@@ -159,21 +159,44 @@ void CISC::HWAlgorithm::Blend(const Mat &inImg1, const Mat &inImg2, int boundary
 
 
     cout<<"OK2"<<endl;
-    cout<<inImg1.depth()<<endl;
-//    Mat leftImg(reSize.height,reSize.width,CV_8UC3, Scalar(0.0,0.0,0.0));
+    //cout<<inImg1.depth()<<endl;
+
+    //Mat leftImg(reSize.height,reSize.width,CV_8UC3,Scalar(0,0,0));
+    //Mat leftImg(inImg1);
+    //leftImg.reshape(0,reSize.height,reSize.width);
+    //Mat Img(reSize.height,reSize.width,CV_32F);
+
+    //cout<<"the type for leftImg "<<leftImg.type()<<endl;
+    //cout<<leftImg.channels()<<endl;
+    cout<<"the type for inImg1 "<<inImg1.type()<<endl;
+    cout<<inImg1.channels()<<endl;
+
+    //Mat leftImg;
+    //cvtColor(Img,leftImg,CV_GRAY2BGR);
+    cout<<"reSize"<<reSize.height<<endl<<reSize.width<<endl;
+    cout<<inImg1.rows<<endl<<inImg1.cols<<endl;
+//    (Mat3b)inImg1;
+    //inImg1.copyTo(leftImg(cv::Rect(0,0,inImg1.rows,inImg1.cols)));
 //    leftImg(Range::all(),Range(0,(int)inImg1.cols-1)) = inImg1;
 //    imshow("img1",inImg1);
 //    imshow("Left",leftImg);
-    Mat leftImg(inImg1);
-    resize(inImg1,leftImg,reSize);
+    //Mat leftImg(inImg1);
+    Mat leftImg(reSize.height,reSize.width,CV_8UC3,Scalar(0,0,0));
+    //resize(inImg1,leftImg,reSize);
+    //leftImg.setTo(0);
+    //inImg1.copyTo(leftImg(cv::Rect(0,0,inImg1.rows,inImg1.cols)));
+    FillIn(inImg1,leftImg,0,0);
+    cout<<"OOOK"<<endl;
     imshow("img1",inImg1);
     imshow("Left",leftImg);
 
     cout<<"OK1"<<endl;
-    //Mat rightImg(reSize.height,reSize.width,CV_8UC3,Scalar(1.0,1.0,1.0));
+    Mat rightImg(reSize.height,reSize.width,CV_8UC3,Scalar(0,0,0));
     //rightImg(Range::all(),Range((int)(len1-1),(int)(reSize.width-1))) = inImg2;
-    Mat rightImg(inImg2);
-    resize(inImg2,rightImg,reSize);
+    //Mat rightImg(inImg2);
+    FillIn(inImg2,rightImg, 0,rightImg.cols-inImg2.cols);
+    //rightImg.convertTo(rightImg,CV_8UC3,1.0);
+    //resize(inImg2,rightImg,reSize);
     imshow("Right",rightImg);
 
     cout<<"OK33"<<endl;
@@ -195,6 +218,7 @@ void CISC::HWAlgorithm::Blend(const Mat &inImg1, const Mat &inImg2, int boundary
     Mat3f lC;
     Mat3f rC;
     leftCom.convertTo(lC,CV_32F,1.0);
+    cout<<"this is OK6666"<<endl;
     rightCom.convertTo(rC,CV_32F,1.0);
     //result = (Mat3f)leftCom.mul(mask.back()) + (Mat3f)rightCom.mul((Scalar(1.0,1.0,1.0)-mask.back()));
     result = lC.mul(mask.back()) + rC.mul((Scalar(1.0,1.0,1.0)-mask.back()));
@@ -208,6 +232,25 @@ void CISC::HWAlgorithm::Blend(const Mat &inImg1, const Mat &inImg2, int boundary
 
     Reconstruct(resultM,result,numLevel,outputImage);
 
+}
+
+void CISC::HWAlgorithm::FillIn(const Mat &inImg, Mat &outImg, int startRow, int startCol) {
+
+    Mat_<Vec3f> _inImg = inImg;
+    Mat_<Vec3f> _outImg = outImg;
+    //inImg.convertTo(_inImg,CV_32F,1.0);
+    //Mat_<Vec3b> _inImg = inImg;
+    //Mat_<Vec3b> _outImg = outImg;
+
+
+    for(int i = startRow; i< startRow+inImg.rows;++i){
+        for(int j = startCol;j< startCol+inImg.cols;++j){
+            _outImg(i,j)[0] = _inImg(i-startRow,j-startCol)[0];
+            _outImg(i,j)[1] = _inImg(i-startRow,j-startCol)[1];
+            _outImg(i,j)[3] = _inImg(i-startRow,j-startCol)[3];
+        }
+    }
+    outImg = _outImg;
 }
 
 

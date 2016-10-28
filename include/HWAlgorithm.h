@@ -41,6 +41,8 @@ namespace CISC{
         void Reconstruct(const vector<Mat3f> & inputPyramid, const Mat &baseMat, int numLevel, Mat & outputImage);
 
         void Blend(const Mat& inImg1, const Mat& inImg2, int boundary1, int boundary2, int numLevel, Mat& outputImage);
+
+        void FillIn(const Mat& inImg, Mat& outImg, int startRow, int startCol);
     };
 }
 
