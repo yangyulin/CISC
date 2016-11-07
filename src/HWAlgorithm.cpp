@@ -40,17 +40,17 @@ void CISC::HWAlgorithm::GaussianPyramid(const Mat &inputImage, vector<Mat3f> &ou
 
 
     //for debug
-/*    string s="GLevel";
+    string s="GLevel";
     for(int i=0; i<numLevel+1; i++){
         std::ostringstream sin;
         sin << i;
         //std::string val = sin.str();
         std::string winName = sin.str() + s;
         namedWindow(winName,WINDOW_AUTOSIZE);
-        imshow(winName,outputPyramid[i]);
+        imshow(winName,(Mat3b)outputPyramid[i]);
 
     }
-*/
+
 
 }
 
@@ -66,11 +66,10 @@ void CISC::HWAlgorithm::LaplacianPyramid(const Mat &inputImage, vector<Mat3f>  &
         outputPyramid.push_back(lapPyr);
         tempImage = down;
     }
-    cout<< "OK99"<<endl;
     tempImage.copyTo(baseMat);
 
 
-/*    //for debug
+    //for debug
     string s="LLevel";
     for(int i=0; i<outputPyramid.size(); i++){
         std::ostringstream sin;
@@ -80,7 +79,7 @@ void CISC::HWAlgorithm::LaplacianPyramid(const Mat &inputImage, vector<Mat3f>  &
         namedWindow(winName,WINDOW_AUTOSIZE);
         imshow(winName,outputPyramid[i]);
     }
-    imshow("Lbase",baseMat);*/
+    imshow("Lbase",(Mat3b)baseMat);
 }
 
 void CISC::HWAlgorithm::Reconstruct(const vector<Mat3f> &inputPyramid, const Mat &baseMat, int numLevel, Mat &outputImage) {
@@ -142,87 +141,41 @@ void CISC::HWAlgorithm::Blend(const Mat &inImg1, const Mat &inImg2, int boundary
         boundary = left2;
         maskSize.width = left1+right2;
         reSize.width = inImg1.cols+inImg2.cols-maskSize.width;
-        cout<<reSize.height<<endl<<reSize.width<<endl;
+        //cout<<reSize.height<<endl<<reSize.width<<endl;
         ratio = (left2-left1)/reSize.width;
         len1 = left2-left1;
         len2 = left1;
         len3 = right2;
         len4 = right1-right2;
     }
-    cout<<reSize.height<<endl<<reSize.width<<endl;
 
-    //Mat_<float> blendMask1(maskSize.height,maskSize.width,0.0);
-    //blendMask1(Range::all(),Range(0,(int)len2))=1.0;
-    cout<<"OK"<<endl;
     Mat_<float> blendMask(reSize.height,reSize.width,0.0);
     blendMask(Range::all(),Range(0,(int)boundary))=1.0;
 
-
-    cout<<"OK2"<<endl;
-    //cout<<inImg1.depth()<<endl;
-
-    //Mat leftImg(reSize.height,reSize.width,CV_8UC3,Scalar(0,0,0));
-    //Mat leftImg(inImg1);
-    //leftImg.reshape(0,reSize.height,reSize.width);
-    //Mat Img(reSize.height,reSize.width,CV_32F);
-
-    //cout<<"the type for leftImg "<<leftImg.type()<<endl;
-    //cout<<leftImg.channels()<<endl;
-    cout<<"the type for inImg1 "<<inImg1.type()<<endl;
-    cout<<inImg1.channels()<<endl;
-
-    //Mat leftImg;
-    //cvtColor(Img,leftImg,CV_GRAY2BGR);
-    cout<<"reSize"<<reSize.height<<endl<<reSize.width<<endl;
-    cout<<inImg1.rows<<endl<<inImg1.cols<<endl;
-//    (Mat3b)inImg1;
-    //inImg1.copyTo(leftImg(cv::Rect(0,0,inImg1.rows,inImg1.cols)));
-//    leftImg(Range::all(),Range(0,(int)inImg1.cols-1)) = inImg1;
-//    imshow("img1",inImg1);
-//    imshow("Left",leftImg);
-    //Mat leftImg(inImg1);
     Mat leftImg(reSize.height,reSize.width,CV_8UC3,Scalar(0,0,0));
-    //resize(inImg1,leftImg,reSize);
-    //leftImg.setTo(0);
-    //inImg1.copyTo(leftImg(cv::Rect(0,0,inImg1.rows,inImg1.cols)));
-    FillIn(inImg1,leftImg,0,0);
-    cout<<"OOOK"<<endl;
+    inImg1.copyTo(leftImg(cv::Rect(0,0,inImg1.cols,inImg1.rows)));
+
     imshow("img1",inImg1);
     imshow("Left",leftImg);
 
-    cout<<"OK1"<<endl;
     Mat rightImg(reSize.height,reSize.width,CV_8UC3,Scalar(0,0,0));
-    //rightImg(Range::all(),Range((int)(len1-1),(int)(reSize.width-1))) = inImg2;
-    //Mat rightImg(inImg2);
-    FillIn(inImg2,rightImg, 0,rightImg.cols-inImg2.cols);
-    //rightImg.convertTo(rightImg,CV_8UC3,1.0);
-    //resize(inImg2,rightImg,reSize);
+    inImg2.copyTo(rightImg(cv::Rect(reSize.width-inImg2.cols,0,inImg2.cols,inImg2.rows)));
     imshow("Right",rightImg);
 
-    cout<<"OK33"<<endl;
     //first construct the lap mask
     Mat blendMask3;
     cvtColor(blendMask,blendMask3,CV_GRAY2BGR);
-    cout<<"OK44"<<endl;
     GaussianPyramid(blendMask3,mask,numLevel);
-    cout<<"OK55"<<endl;
     LaplacianPyramid(leftImg,leftM,leftCom,numLevel);
-    cout<<"OK66"<<endl;
     LaplacianPyramid(rightImg,rightM,rightCom,numLevel);
 
-    cout<<"OK4"<<endl;
     //blend the laplacian pyr
-    cout<<leftCom.cols<<endl<<leftCom.rows<<endl<<endl;
-    cout<<mask.back().cols<<endl<<mask.back().rows<<endl;
-
     Mat3f lC;
     Mat3f rC;
     leftCom.convertTo(lC,CV_32F,1.0);
-    cout<<"this is OK6666"<<endl;
     rightCom.convertTo(rC,CV_32F,1.0);
     //result = (Mat3f)leftCom.mul(mask.back()) + (Mat3f)rightCom.mul((Scalar(1.0,1.0,1.0)-mask.back()));
     result = lC.mul(mask.back()) + rC.mul((Scalar(1.0,1.0,1.0)-mask.back()));
-    cout<<"OK7"<<endl;
     for(int nl=0;nl<numLevel;nl++){
         Mat A = leftM[nl].mul(mask[nl]);
         Mat B = rightM[nl].mul(Scalar(1.0,1.0,1.0)-mask[nl]);
@@ -238,10 +191,6 @@ void CISC::HWAlgorithm::FillIn(const Mat &inImg, Mat &outImg, int startRow, int 
 
     Mat_<Vec3f> _inImg = inImg;
     Mat_<Vec3f> _outImg = outImg;
-    //inImg.convertTo(_inImg,CV_32F,1.0);
-    //Mat_<Vec3b> _inImg = inImg;
-    //Mat_<Vec3b> _outImg = outImg;
-
 
     for(int i = startRow; i< startRow+inImg.rows;++i){
         for(int j = startCol;j< startCol+inImg.cols;++j){

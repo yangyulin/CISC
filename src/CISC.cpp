@@ -1,5 +1,6 @@
 //
 // Created by rpng on 7/26/16.
+// Delete debug information 11/07/16
 //
 
 #include <opencv2/core/core.hpp>
@@ -61,23 +62,23 @@ int main( int argc, char** argv ){
     Kern = (Mat_<float >(3,3) << 0, -1, 0, -1, 5, -1, 0, -1, 0);
     CISC::HWAlgorithm HWpart1;
     HWpart1.Convolve(image,imageOutput,Kern);
-//    namedWindow("The result of Convolve",WINDOW_AUTOSIZE);
-//    imshow("The result of Convolve",imageOutput);
+    namedWindow("The result of Convolve",WINDOW_AUTOSIZE);
+    imshow("The result of Convolve",imageOutput);
 
     /*
      * Part 1 Reduce(I)
      */
     HWpart1.Reduce(image,imageOutput);
-//    namedWindow("The result of Reduce", WINDOW_AUTOSIZE);
-//    imshow("The result of Reduce", imageOutput);
+    namedWindow("The result of Reduce", WINDOW_AUTOSIZE);
+    imshow("The result of Reduce", imageOutput);
 
     /*
      * Part 1 Expand(I)
      */
 
     HWpart1.Expand(image,imageOutput, Size(image.cols*2,image.rows*2));
-//    namedWindow("The result of Expand", WINDOW_AUTOSIZE);
-//    imshow("The result of Expand", imageOutput);
+    namedWindow("The result of Expand", WINDOW_AUTOSIZE);
+    imshow("The result of Expand", imageOutput);
 
     /*
      * Part 1 GaussianPyramid(I,n)
@@ -89,17 +90,12 @@ int main( int argc, char** argv ){
     Mat baseMat;
     int numLevel = 5;
 
-    cout<<"This is OK 1"<<endl;
     HWpart1.GaussianPyramid(image,imgOutputArr,numLevel);
     HWpart1.LaplacianPyramid(image,imgOutputArr,baseMat,numLevel);
-    cout<<"This is OK 2 2"<<endl;
     HWpart1.Reconstruct(imgOutputArr,baseMat,numLevel,imgRecon);
-    cout<<"This OK 1"<<endl;
     namedWindow("Reconstruction", WINDOW_AUTOSIZE);
     imshow("Reconstruction",(Mat3b)imgRecon);
 
-
-    cout<<"This is oK 1"<<endl;
 
     /*
      * Part 1 Blend two images
