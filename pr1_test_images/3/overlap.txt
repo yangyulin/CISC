@@ -1,0 +1,2 @@
+im1<->im2 40 pixels
+im2<->im3 60 pixels

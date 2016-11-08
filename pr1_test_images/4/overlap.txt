@@ -1,0 +1,4 @@
+im1<->im2 60 pixels
+im2<->im3 80 pixels
+im3<->im4 50 pixels
+im4<->im5 30 pixels

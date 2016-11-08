@@ -15,6 +15,7 @@
 #include <help.h>
 #include <HWAlgorithm.h>
 #include <HWAlgorithm2.h>
+#include <HWAlgorithm3.h>
 
 
 using namespace cv;
@@ -29,7 +30,7 @@ void on_mouse( int e, int x, int y, int d, void *ptr ) {
 
 int main( int argc, char** argv ){
 
-    CISC::help instruction;
+/*    CISC::help instruction;
     instruction.instructionHelp(argv[0]);
 
     const char* filename = argc >=2 ? argv[1] : "../data/lena.jpg";
@@ -51,12 +52,12 @@ int main( int argc, char** argv ){
     imshow("Input Image", image);
     std::cout<<"The Input image is played!!"<<std::endl<<std::endl;
 
-    /*
+    *//*
      * Part 1 Convolve(I,H)
      * input:     image
      * output:    imageOutput
      * mask:      Kern
-     */
+     *//*
     //
     Mat Kern(3,3,CV_32F);
     Kern = (Mat_<float >(3,3) << 0, -1, 0, -1, 5, -1, 0, -1, 0);
@@ -65,26 +66,26 @@ int main( int argc, char** argv ){
     namedWindow("The result of Convolve",WINDOW_AUTOSIZE);
     imshow("The result of Convolve",imageOutput);
 
-    /*
+    *//*
      * Part 1 Reduce(I)
-     */
+     *//*
     HWpart1.Reduce(image,imageOutput);
     namedWindow("The result of Reduce", WINDOW_AUTOSIZE);
     imshow("The result of Reduce", imageOutput);
 
-    /*
+    *//*
      * Part 1 Expand(I)
-     */
+     *//*
 
     HWpart1.Expand(image,imageOutput, Size(image.cols*2,image.rows*2));
     namedWindow("The result of Expand", WINDOW_AUTOSIZE);
     imshow("The result of Expand", imageOutput);
 
-    /*
+    *//*
      * Part 1 GaussianPyramid(I,n)
      * Part 1 LaplacianPyramid(I,n)
      * Part 1 Reconstruct
-     */
+     *//*
     vector<Mat3f> imgOutputArr;
     Mat imgRecon;
     Mat baseMat;
@@ -97,12 +98,14 @@ int main( int argc, char** argv ){
     imshow("Reconstruction",(Mat3b)imgRecon);
 
 
-    /*
+    *//*
      * Part 1 Blend two images
-     */
+     *//*
 
-    string fileImg1 = "../data/aero1.jpg";
-    string fileImg2 = "../data/aero3.jpg";
+    //string fileImg1 = "../data/aero1.jpg";
+    //string fileImg2 = "../data/aero3.jpg";
+    string fileImg1 = "../pr1_test_images/1/im1.png";
+    string fileImg2 = "../pr1_test_images/1/im2.png";
     //please choose a point in image 1
     cout<<"Please click a point in image 1 :"<<endl;
     //read image1
@@ -175,6 +178,45 @@ int main( int argc, char** argv ){
     part2.Mannual();
 
     cv::waitKey(0);
+    */
+
+    /*
+     * Automatic unwarp the images
+     *
+     */
+
+    //const char* inFile1 = "../data/rubberwhale1.png";
+    //const char* inFile2 = "../data/rubberwhale2.png";
+    //const char* inFile1 = "../data/1.jpg";
+    //const char* inFile2 = "../data/2.jpg";
+    const char* inFile1 = "../data/1.JPG";
+    const char* inFile2 = "../data/2.JPG";
+    const char* inFile3 = "../data/3.JPG";
+
+    Mat image11 = imread(inFile1);
+    Mat image22 = imread(inFile2);
+    Mat image33 = imread(inFile3);
+
+    Mat greyImg1, greyImg2, greyImg3;
+    cvtColor(image11,greyImg1,CV_RGB2GRAY);
+    cvtColor(image22,greyImg2,CV_RGB2GRAY);
+    cvtColor(image33,greyImg3,CV_RGB2GRAY);
+
+    imshow("1",image11);
+    imshow("2",image22);
+    imshow("3",image33);
+
+    cv::waitKey(0);
+
+    Mat panoImg1;
+    Mat panoImg2;
+
+    //step1
+    HWAlgorithm3 warpImg;
+    warpImg.unWarp(image33,image22,panoImg1);
+    warpImg.unWarp(panoImg1,image11,panoImg2);
+    imshow("final",panoImg2);
+    waitKey(0);
 
 
     return 0;

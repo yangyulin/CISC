@@ -144,12 +144,36 @@ CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o.provides: CMakeFiles/CISC.dir/src/HWA
 
 CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o.provides.build: CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o
 
+CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o: CMakeFiles/CISC.dir/flags.make
+CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o: ../src/HWAlgorithm3.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/rpng/linde/cv/CISC/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o -c /home/rpng/linde/cv/CISC/src/HWAlgorithm3.cpp
+
+CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/rpng/linde/cv/CISC/src/HWAlgorithm3.cpp > CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.i
+
+CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/rpng/linde/cv/CISC/src/HWAlgorithm3.cpp -o CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.s
+
+CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o.requires:
+.PHONY : CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o.requires
+
+CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o.provides: CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o.requires
+	$(MAKE) -f CMakeFiles/CISC.dir/build.make CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o.provides.build
+.PHONY : CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o.provides
+
+CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o.provides.build: CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o
+
 # Object files for target CISC
 CISC_OBJECTS = \
 "CMakeFiles/CISC.dir/src/CISC.cpp.o" \
 "CMakeFiles/CISC.dir/src/HWAlgorithm.cpp.o" \
 "CMakeFiles/CISC.dir/src/help.cpp.o" \
-"CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o"
+"CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o" \
+"CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o"
 
 # External object files for target CISC
 CISC_EXTERNAL_OBJECTS =
@@ -158,6 +182,7 @@ CISC: CMakeFiles/CISC.dir/src/CISC.cpp.o
 CISC: CMakeFiles/CISC.dir/src/HWAlgorithm.cpp.o
 CISC: CMakeFiles/CISC.dir/src/help.cpp.o
 CISC: CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o
+CISC: CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o
 CISC: CMakeFiles/CISC.dir/build.make
 CISC: /usr/local/lib/libopencv_xphoto.so.3.1.0
 CISC: /usr/local/lib/libopencv_xobjdetect.so.3.1.0
@@ -245,6 +270,7 @@ CMakeFiles/CISC.dir/requires: CMakeFiles/CISC.dir/src/CISC.cpp.o.requires
 CMakeFiles/CISC.dir/requires: CMakeFiles/CISC.dir/src/HWAlgorithm.cpp.o.requires
 CMakeFiles/CISC.dir/requires: CMakeFiles/CISC.dir/src/help.cpp.o.requires
 CMakeFiles/CISC.dir/requires: CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o.requires
+CMakeFiles/CISC.dir/requires: CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o.requires
 .PHONY : CMakeFiles/CISC.dir/requires
 
 CMakeFiles/CISC.dir/clean:

@@ -186,6 +186,30 @@ src/HWAlgorithm2.cpp.s:
 	$(MAKE) -f CMakeFiles/CISC.dir/build.make CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.s
 .PHONY : src/HWAlgorithm2.cpp.s
 
+src/HWAlgorithm3.o: src/HWAlgorithm3.cpp.o
+.PHONY : src/HWAlgorithm3.o
+
+# target to build an object file
+src/HWAlgorithm3.cpp.o:
+	$(MAKE) -f CMakeFiles/CISC.dir/build.make CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o
+.PHONY : src/HWAlgorithm3.cpp.o
+
+src/HWAlgorithm3.i: src/HWAlgorithm3.cpp.i
+.PHONY : src/HWAlgorithm3.i
+
+# target to preprocess a source file
+src/HWAlgorithm3.cpp.i:
+	$(MAKE) -f CMakeFiles/CISC.dir/build.make CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.i
+.PHONY : src/HWAlgorithm3.cpp.i
+
+src/HWAlgorithm3.s: src/HWAlgorithm3.cpp.s
+.PHONY : src/HWAlgorithm3.s
+
+# target to generate assembly for a file
+src/HWAlgorithm3.cpp.s:
+	$(MAKE) -f CMakeFiles/CISC.dir/build.make CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.s
+.PHONY : src/HWAlgorithm3.cpp.s
+
 src/help.o: src/help.cpp.o
 .PHONY : src/help.o
 
@@ -228,6 +252,9 @@ help:
 	@echo "... src/HWAlgorithm2.o"
 	@echo "... src/HWAlgorithm2.i"
 	@echo "... src/HWAlgorithm2.s"
+	@echo "... src/HWAlgorithm3.o"
+	@echo "... src/HWAlgorithm3.i"
+	@echo "... src/HWAlgorithm3.s"
 	@echo "... src/help.o"
 	@echo "... src/help.i"
 	@echo "... src/help.s"

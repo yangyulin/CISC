@@ -36,7 +36,7 @@ ADD_EXECUTABLE( CISC
                 src/HWAlgorithm.cpp
                 include/help.h
                 src/help.cpp
-        include/HWAlgorithm2.h src/HWAlgorithm2.cpp)
+        include/HWAlgorithm2.h src/HWAlgorithm2.cpp include/HWAlgorithm3.h src/HWAlgorithm3.cpp)
 
 TARGET_LINK_LIBRARIES(  CISC
                         ${OpenCV_LIBS}

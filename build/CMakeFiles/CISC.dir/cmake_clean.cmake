@@ -3,6 +3,7 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/CISC.dir/src/HWAlgorithm.cpp.o"
   "CMakeFiles/CISC.dir/src/help.cpp.o"
   "CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o"
+  "CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o"
   "CISC.pdb"
   "CISC"
 )
