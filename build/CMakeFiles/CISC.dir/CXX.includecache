@@ -67,6 +67,8 @@ stdio.h
 -
 stdlib.h
 -
+HWAlgorithm.h
+-
 
 ../include/help.h
 iostream
@@ -96,6 +98,12 @@ HWAlgorithm.h
 HWAlgorithm2.h
 -
 HWAlgorithm3.h
+-
+
+/home/rpng/linde/cv/CISC/src/HWAlgorithm3.cpp
+HWAlgorithm3.h
+-
+opencv2/calib3d.hpp
 -
 
 /usr/include/eigen3/Eigen/Cholesky

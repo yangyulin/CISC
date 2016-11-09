@@ -60,9 +60,16 @@ void CISC::HWAlgorithm3::unWarp(Mat &input1, Mat &input2, Mat &outPut) {
 
     //find the homography matrix
     Mat H = findHomography(ptImg1,ptImg2,CV_RANSAC);
-
-    warpPerspective(input1,outPut,H,cv::Size(input1.cols+input2.cols,input1.rows), BORDER_REPLICATE,BORDER_TRANSPARENT);
+    cout<<"The first two rows of the Homography matrix is the affine matrix::"<<endl
+        << H<<endl<<endl;
+    Mat outPut1;
+    Mat outPut2;
+    warpPerspective(input1,outPut,H,cv::Size(input1.cols+input2.cols*0.35,input1.rows));
     imshow("first",outPut);
+
+    //blend images
+    //HWAlgorithm blendImg;
+    //blendImg.Blend(input2,outPut1,input2.cols,input2.cols,4,outPut);
     input2.copyTo(outPut(cv::Rect(0,0,input2.cols,input2.rows)));
     //cv::Mat half(outPut,cv::Rect(0,0,input2.cols,input2.rows));
     //input2.copyTo((half));

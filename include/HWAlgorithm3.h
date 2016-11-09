@@ -18,6 +18,9 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <HWAlgorithm.h>
+
 using namespace std;
 using namespace cv;
 using namespace cv::xfeatures2d;

@@ -582,6 +582,7 @@ CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o
  /usr/local/include/opencv2/xfeatures2d.hpp
  /usr/local/include/opencv2/xfeatures2d/nonfree.hpp
 CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o
+ ../include/HWAlgorithm.h
  ../include/HWAlgorithm3.h
  /home/rpng/linde/cv/CISC/src/HWAlgorithm3.cpp
  /usr/local/include/opencv/cxcore.h

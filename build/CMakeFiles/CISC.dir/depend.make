@@ -581,6 +581,7 @@ CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o: /usr/local/include/opencv2/videoio/v
 CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o: /usr/local/include/opencv2/xfeatures2d.hpp
 CMakeFiles/CISC.dir/src/HWAlgorithm2.cpp.o: /usr/local/include/opencv2/xfeatures2d/nonfree.hpp
 
+CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o: ../include/HWAlgorithm.h
 CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o: ../include/HWAlgorithm3.h
 CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o: ../src/HWAlgorithm3.cpp
 CMakeFiles/CISC.dir/src/HWAlgorithm3.cpp.o: /usr/local/include/opencv/cxcore.h
